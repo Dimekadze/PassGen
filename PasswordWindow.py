@@ -133,7 +133,7 @@ class AppWindow(ctk.CTk):
 
         def PlusButton():
             length = int(self.Label_Curr_Value.get())
-            if length > 99:
+            if length >= 100:
                 showinfo(title=MinusButton, message="Password length can't be more than 100")
             else:
                 self.Label_Curr_Value.delete(0, '8')
@@ -141,7 +141,7 @@ class AppWindow(ctk.CTk):
 
         def MinusButton():
             length = int(self.Label_Curr_Value.get())
-            if length < 2:
+            if length <= 1:
                 showinfo(title=MinusButton, message="Password length can't be less than zero")
             else:
                 self.Label_Curr_Value.delete(0, '8')
@@ -149,15 +149,21 @@ class AppWindow(ctk.CTk):
                 return self.Label_Curr_Value.insert(0, length)
 
         def GenerateButton():
-            length = int(self.Label_Curr_Value.get())
+            try:
+                length = self.Label_Curr_Value.get()
 
-            use_numbers = self.include_numbers.get()
-            use_symbols = self.include_symbols.get()
-            use_upper = self.include_upper.get()
-            use_lower = self.include_lower.get()
+                if 1 <= int(length) <= 100 and length.isdigit():
+                    use_numbers = self.include_numbers.get()
+                    use_symbols = self.include_symbols.get()
+                    use_upper = self.include_upper.get()
+                    use_lower = self.include_lower.get()
 
-            password = PassGenFunc(length, use_numbers, use_symbols, use_upper, use_lower)
-            self.Label_Password.configure(text=password)
+                    password = PassGenFunc(int(length), use_numbers, use_symbols, use_upper, use_lower)
+                    self.Label_Password.configure(text=password)
+                else:
+                    showinfo(title=GenerateButton, message="Invalid input")
+            except ValueError:
+                showinfo(title=GenerateButton, message="Invalid input")
 
         def PassGenFunc(length, use_numbers, use_symbols, use_upper, use_lower):
             all_in_one = ''
@@ -171,17 +177,12 @@ class AppWindow(ctk.CTk):
             if use_lower:
                 all_in_one += string.ascii_lowercase
 
-            try:
-                if length >= 1 and length <= 100:
-                    random_password = ''.join(sc.choice(all_in_one) for i in range(length))
-                    return random_password
-                else:
-                    showinfo(title=GenerateButton, message="Invalid input")
-            except ValueError:
-                showinfo(title=GenerateButton, message="Invalid input")
+            random_password = ''.join(sc.choice(all_in_one) for i in range(length))
+            return random_password
 
 
 
+        # password options
         self.Label_Options = ctk.CTkLabel(self.options_frame, 
                                           text="Options", 
                                           font=self.BigFont,
