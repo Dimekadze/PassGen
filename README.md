@@ -1,1 +1,3 @@
-Testing tkinter and making simple password generator. The program include options as symbols and length of the password.  
+# Just for fun
+
+## Testing the customtkinter library, customizing the window and generating letters with numbers
