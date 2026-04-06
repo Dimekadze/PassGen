@@ -20,6 +20,6 @@ pip install customtkinter pyperclip
 python3 PassGenWindow.py
 ```
 
-## Interface
+## Screenshots
 <img width="898" height="347" alt="image_2026-01-26_23-36-04" src="https://github.com/user-attachments/assets/c0c5fe88-938f-4882-9f0f-6c75f34141e3" />
 
